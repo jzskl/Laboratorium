@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Models;
 
 namespace WebApp.Controllers;
 
@@ -15,42 +16,13 @@ public class CalculatorController : Controller
         return View();
     }
 
-    public IActionResult Result(Operators? op, double? a, double? b)
+    public IActionResult Result(CalculatorModel model)
     {
-        if (op is null)
+        if (!model.IsValid())
         {
-            ViewBag.ErrorMessage = "Nieznany operator";
             return View("CustomError");
         }
-        
-        if (a is null || b is null)
-        {
-            ViewBag.ErrorMessage = "Niepoprawny format liczby w parametrze a lub b";
-            return View("CustomError");
-        }
-        
-        ViewBag.A = a;
-        ViewBag.B = b;
-        switch (op)
-        {
-            case Operators.Add:
-                ViewBag.Operator = "+";
-                ViewBag.Result = a + b;
-                break;
-            case Operators.Sub:
-                ViewBag.Operator = "-";
-                ViewBag.Result = a - b;
-                break;
-            case Operators.Mul:
-                ViewBag.Operator = "*";
-                ViewBag.Result = a * b;
-                break;
-            case Operators.Div:
-                ViewBag.Operator = "/";
-                ViewBag.Result = a / b;
-                break;
-        }
-        return View();
+        return View(model);
     }
 }
 
