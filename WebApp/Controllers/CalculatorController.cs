@@ -15,7 +15,7 @@ public class CalculatorController : Controller
         return View();
     }
 
-    public IActionResult Result(Operator? op, double? a, double? b)
+    public IActionResult Result(Operators? op, double? a, double? b)
     {
         if (op is null)
         {
@@ -33,19 +33,19 @@ public class CalculatorController : Controller
         ViewBag.B = b;
         switch (op)
         {
-            case Operator.Add:
+            case Operators.Add:
                 ViewBag.Operator = "+";
                 ViewBag.Result = a + b;
                 break;
-            case Operator.Sub:
+            case Operators.Sub:
                 ViewBag.Operator = "-";
                 ViewBag.Result = a - b;
                 break;
-            case Operator.Mul:
+            case Operators.Mul:
                 ViewBag.Operator = "*";
                 ViewBag.Result = a * b;
                 break;
-            case Operator.Div:
+            case Operators.Div:
                 ViewBag.Operator = "/";
                 ViewBag.Result = a / b;
                 break;
@@ -54,7 +54,7 @@ public class CalculatorController : Controller
     }
 }
 
-public enum Operator
+public enum Operators
 {
     Add, Sub, Mul, Div
 }
