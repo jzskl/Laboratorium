@@ -1,0 +1,24 @@
+﻿@{
+Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            <h2>Birth</h2>
+            <form action="Result" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="Name">Imię</label>
+                    <input class="form-control" type="text" name="Name"/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="Date">Data urodzenia</label>
+                    <input class="form-control" type="text" name="Date"/>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Oblicz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
