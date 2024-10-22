@@ -64,4 +64,10 @@ public class ContactController : Controller
         _contacts.Add(model.Id, model);
         return View("Index", _contacts);
     }
+
+    public IActionResult Delete(int id)
+    {
+        _contacts.Remove(id);
+        return View("Index", _contacts);
+    }
 }
