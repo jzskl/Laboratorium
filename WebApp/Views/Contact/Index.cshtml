@@ -28,7 +28,7 @@
                 <td>@entry.Category</td>
                 <td>
                     <div>
-                        <a>Edycja</a>
+                        <a class="btn btn-success" asp-action="Edit" asp-route-id=@entry.Id>Edycja</a>
                         <a>Szczegóły</a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id=@entry.Id>Usuń</a>
                     </div>
