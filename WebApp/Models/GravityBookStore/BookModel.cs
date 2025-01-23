@@ -19,6 +19,7 @@ public class BookModel
     [Display(Name = "Ilość stron")]
     public int NumPages { get; set; }
     
+    [DataType(DataType.Date)]
     [Display(Name = "Data publikacji")]
     public DateOnly? PublicationDate { get; set; }
     

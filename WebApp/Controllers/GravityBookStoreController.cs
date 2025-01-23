@@ -42,14 +42,15 @@ public class GravityBookStoreController : Controller
         return View(books);
     }
 
-    [Authorize(Roles = "user, admin")]
+    [Authorize]
     public IActionResult Add()
     {
         return View();
     }
 
     [HttpPost]
-    [Authorize(Roles = "user, admin")]
+    [ValidateAntiForgeryToken]
+    [Authorize]
     public IActionResult Add(BookModel model)
     {
         if (!ModelState.IsValid)
@@ -66,10 +67,10 @@ public class GravityBookStoreController : Controller
         };
         _context.Books.Add(book);
         _context.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
-    [Authorize(Roles = "user, admin")]
+    [Authorize]
     public IActionResult Edit(int? id)
     {
         if (id == null)
@@ -94,7 +95,8 @@ public class GravityBookStoreController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "user, admin")]
+    [ValidateAntiForgeryToken]
+    [Authorize]
     public IActionResult Edit(BookModel model)
     {
         if (!ModelState.IsValid)
@@ -113,8 +115,8 @@ public class GravityBookStoreController : Controller
         book.NumPages = model.NumPages;
         book.PublicationDate = model.PublicationDate;
         _context.SaveChanges();
-        
-        return RedirectToAction("Index");
+
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Authors(int? id, int page = 1, int pageSize = 20)
