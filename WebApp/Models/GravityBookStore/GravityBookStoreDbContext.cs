@@ -25,11 +25,13 @@ public class GravityBookStoreDbContext: DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<AuthorEntity>()
-            .ToTable("author");
+            .ToTable("author")
+            .HasKey(x => x.AuthorId);
 
         modelBuilder.Entity<BookEntity>(e =>
         {
             e.ToTable("book");
+            e.HasKey(x => x.BookId);
 
             e.HasOne<LanguageEntity>(x => x.Language)
                 .WithMany(x => x.Books)
