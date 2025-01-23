@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Models.Services;
@@ -22,6 +23,7 @@ public class ContactController : Controller
 
     // Formularz dodania kontaktu
     [HttpGet]
+    [Authorize]
     public IActionResult Add()
     {
         var model = new ContactModel();
@@ -38,6 +40,7 @@ public class ContactController : Controller
     
     // Odebranie i zapisanie nowego kontaktu
     [HttpPost]
+    [Authorize]
     public IActionResult Add(ContactModel model)
     {
         if (!ModelState.IsValid)
