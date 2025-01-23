@@ -70,9 +70,19 @@ public class GravityBookStoreController : Controller
     }
 
     [Authorize(Roles = "user, admin")]
-    public IActionResult Edit(int id)
+    public IActionResult Edit(int? id)
     {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        
         var book = _context.Books.Find(id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        
         return View(new BookModel
         {
             BookId = book.BookId,
@@ -93,6 +103,11 @@ public class GravityBookStoreController : Controller
         }
         
         var book = _context.Books.Find(model.BookId);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        
         book.Title = model.Title;
         book.ISBN13 = model.ISBN13;
         book.NumPages = model.NumPages;
@@ -102,8 +117,13 @@ public class GravityBookStoreController : Controller
         return RedirectToAction("Index");
     }
 
-    public IActionResult Authors(int id, int page = 1, int pageSize = 20)
+    public IActionResult Authors(int? id, int page = 1, int pageSize = 20)
     {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        
         var book = _context.Books
             .Include(x => x.Authors)
             .ThenInclude(x => x.Books)
