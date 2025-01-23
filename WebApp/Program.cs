@@ -2,6 +2,7 @@ using WebApp.Models;
 using WebApp.Models.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Models.GravityBookStore;
 
 namespace WebApp;
 
@@ -16,6 +17,7 @@ public class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<IContactService, EFContactService>();
         builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddDbContext<GravityBookStoreDbContext>();
         builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
