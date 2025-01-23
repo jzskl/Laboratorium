@@ -44,4 +44,21 @@ public class GravityBookStoreController : Controller
         
         return View(books);
     }
+
+    public IActionResult Authors(int id, int page = 1, int pageSize = 20)
+    {
+        var book = _context.Books
+            .Include(x => x.Authors)
+            .ThenInclude(x => x.Books)
+            .First(x => x.BookId == id);
+        
+        var authors = book.Authors
+            .OrderBy(x => x.AuthorName)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        ViewBag.BookTitle = book.Title;
+        return View(authors);
+    }
 }

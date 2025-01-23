@@ -1,44 +1,35 @@
-@model List<WebApp.Models.GravityBookStore.BookModel>
+@model List<WebApp.Models.GravityBookStore.AuthorEntity>
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>Książki</h2>
-<div class="d-flex justify-content-end">
-    <a class="btn btn-primary" asp-action="Add" asp-controller="GravityBookStore">Dodaj książkę</a>
-</div>
+<h2>Autorzy książki "@ViewBag.BookTitle"</h2>
 @if (Model.Count > 0)
 {
     <table class="table">
         <thead>
         <tr>
-            <th>@Html.DisplayNameFor(m => m[0].Title)</th>
-            <th>@Html.DisplayNameFor(m => m[0].ISBN13)</th>
-            <th>@Html.DisplayNameFor(m => m[0].NumPages)</th>
-            <th>@Html.DisplayNameFor(m => m[0].PublicationDate)</th>
-            <th>@Html.DisplayNameFor(m => m[0].AuthorsCount)</th>
-            <th>@Html.DisplayNameFor(m => m[0].SoldCount)</th>
-            <th>Akcje</th>
+            <th>@Html.DisplayNameFor(m => m[0].AuthorName)</th>
+            <th>@Html.DisplayNameFor(m => m[0].Books)</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var entry in @Model)
         {
             <tr>
-                <td>@entry.Title</td>
-                <td>@entry.ISBN13</td>
-                <td>@entry.NumPages</td>
-                <td>@entry.PublicationDate</td>
+                <td>@entry.AuthorName</td>
                 <td>
-                    <a asp-action="Authors" asp-route-id="@entry.BookId">@entry.AuthorsCount</a>
-                </td>
-                <td>@entry.SoldCount</td>
-                <td>
-                    <div>
-                        <a class="btn btn-success" asp-action="Edit" asp-route-id=@entry.BookId>Edytuj</a>
-                    </div>
+                    <details>
+                        <summary>@entry.Books.Count książ@(entry.Books.Count == 1 ? "ka" : entry.Books.Count <= 4 ? "ki" : "ek")</summary>
+                        <ul>
+                            @foreach (var book in entry.Books)
+                            {
+                                <li><a asp-action="Edit" asp-route-id="@book.BookId">@book.Title</a></li>
+                            }
+                        </ul>
+                    </details>
                 </td>
             </tr>
         }
@@ -77,5 +68,5 @@
 }
 else
 {
-    <h2>Brak książek</h2>
+    <h2>Brak autorów</h2>
 }
