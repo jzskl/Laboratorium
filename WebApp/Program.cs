@@ -3,6 +3,7 @@ using WebApp.Models.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models.GravityBookStore;
+using WebApp.Models.Movies;
 
 namespace WebApp;
 
@@ -17,6 +18,7 @@ public class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddTransient<IContactService, EFContactService>();
         builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddDbContext<MoviesDbContext>();
         builder.Services.AddDbContext<GravityBookStoreDbContext>();
         builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
