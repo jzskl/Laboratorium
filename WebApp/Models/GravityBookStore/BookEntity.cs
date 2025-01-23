@@ -28,4 +28,6 @@ public class BookEntity
     public PublisherEntity? Publisher { get; set; }
 
     public ISet<AuthorEntity> Authors { get; set; }
+    
+    public ISet<OrderLineEntity> OrderLines { get; set; }
 }

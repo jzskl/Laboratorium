@@ -69,5 +69,15 @@ public class GravityBookStoreDbContext: DbContext
         modelBuilder.Entity<PublisherEntity>()
             .ToTable("publisher")
             .HasKey(x => x.PublisherId);
+
+        modelBuilder.Entity<OrderLineEntity>(e =>
+        {
+            e.ToTable("order_line");
+            e.HasKey(x => x.LineId);
+            e
+                .HasOne(x => x.Book)
+                .WithMany(x => x.OrderLines)
+                .HasForeignKey(x => x.BookId);
+        });
     }
 }

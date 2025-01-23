@@ -18,6 +18,7 @@ public class GravityBookStoreController : Controller
     {
         var books = _context.Books
             .Include(x => x.Authors)
+            .Include(x => x.OrderLines)
             .Select(x => new BookModel
             {
                 BookId = x.BookId,
@@ -26,17 +27,12 @@ public class GravityBookStoreController : Controller
                 NumPages = x.NumPages ?? 0,
                 PublicationDate = x.PublicationDate,
                 AuthorsCount = x.Authors.Count,
-                SoldCount = 0
+                SoldCount = x.OrderLines.Count,
             })
             .OrderBy(x => x.Title)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
-
-        foreach (var book in books)
-        {
-            // TODO: SoldCount
-        }
         
         var count = _context.Books.Count();
         ViewBag.Page = page;
