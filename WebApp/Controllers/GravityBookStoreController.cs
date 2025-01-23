@@ -47,6 +47,33 @@ public class GravityBookStoreController : Controller
     }
 
     [Authorize(Roles = "user, admin")]
+    public IActionResult Add()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "user, admin")]
+    public IActionResult Add(BookModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var book = new BookEntity
+        {
+            Title = model.Title,
+            ISBN13 = model.ISBN13,
+            NumPages = model.NumPages,
+            PublicationDate = model.PublicationDate,
+        };
+        _context.Books.Add(book);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    [Authorize(Roles = "user, admin")]
     public IActionResult Edit(int id)
     {
         var book = _context.Books.Find(id);

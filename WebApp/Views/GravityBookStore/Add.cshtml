@@ -1,0 +1,37 @@
+@model WebApp.Models.GravityBookStore.BookModel
+
+@{
+    ViewBag.Title = "Dodawanie książki";
+    Layout = "_Layout";
+}
+
+<h2>Dodaj książkę</h2>
+<div>
+    <form asp-action="Add" method="post">
+        <div class="mb-3">
+            <label class="form-label" asp-for="Title"></label>
+            <input class="form-control" asp-for="Title"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="ISBN13"></label>
+            <input class="form-control" asp-for="ISBN13"/>
+            <span asp-validation-for="ISBN13" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="NumPages"></label>
+            <input class="form-control" asp-for="NumPages"/>
+            <span asp-validation-for="NumPages" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="PublicationDate"></label>
+            <input class="form-control" asp-for="PublicationDate"/>
+            <span asp-validation-for="PublicationDate" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form>
+</div>
