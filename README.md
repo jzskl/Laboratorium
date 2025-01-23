@@ -1,1 +1,1 @@
-https://github.com/jzskl/Laboratorium
+https://github.com/jzskl/Laboratorium/tree/projekt
