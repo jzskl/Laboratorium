@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models.GravityBookStore;
@@ -40,9 +41,42 @@ public class GravityBookStoreController : Controller
         var count = _context.Books.Count();
         ViewBag.Page = page;
         ViewBag.PageSize = pageSize;
-        ViewBag.MaxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
+        ViewBag.MaxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0) + 1;
         
         return View(books);
+    }
+
+    [Authorize(Roles = "user, admin")]
+    public IActionResult Edit(int id)
+    {
+        var book = _context.Books.Find(id);
+        return View(new BookModel
+        {
+            BookId = book.BookId,
+            Title = book.Title,
+            ISBN13 = book.ISBN13,
+            NumPages = book.NumPages ?? 0,
+            PublicationDate = book.PublicationDate,
+        });
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "user, admin")]
+    public IActionResult Edit(BookModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        
+        var book = _context.Books.Find(model.BookId);
+        book.Title = model.Title;
+        book.ISBN13 = model.ISBN13;
+        book.NumPages = model.NumPages;
+        book.PublicationDate = model.PublicationDate;
+        _context.SaveChanges();
+        
+        return RedirectToAction("Index");
     }
 
     public IActionResult Authors(int id, int page = 1, int pageSize = 20)
@@ -51,14 +85,23 @@ public class GravityBookStoreController : Controller
             .Include(x => x.Authors)
             .ThenInclude(x => x.Books)
             .First(x => x.BookId == id);
+
+        var query = book.Authors
+            .OrderBy(x => x.AuthorName);
         
+        var count = query.Count();
         var authors = book.Authors
             .OrderBy(x => x.AuthorName)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
-
+        
+        ViewBag.Page = page;
+        ViewBag.PageSize = pageSize;
+        ViewBag.MaxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0) + 1;
+        
         ViewBag.BookTitle = book.Title;
+        ViewBag.Id = id;
         return View(authors);
     }
 }

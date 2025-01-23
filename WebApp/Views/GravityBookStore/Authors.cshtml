@@ -38,19 +38,19 @@
     <nav>
         <ul class="pagination">
             <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.Page - 1)">&laquo;</a>
+                <a class="page-link" asp-action="Authors" asp-route-page="@(ViewBag.Page - 1)" asp-route-id="@ViewBag.Id">&laquo;</a>
             </li>
 
             @for (int i = 1; i <= ViewBag.MaxPage; i++)
             {
                 if (Math.Abs(i - ViewBag.Page) <= 1) {
                     <li class="page-item @(i == ViewBag.Page ? "active" : "")">
-                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="Authors" asp-route-page="@i" asp-route-id="@ViewBag.Id">@i</a>
                     </li>
                 } else if (i == 1 || i == ViewBag.MaxPage)
                 {
                     <li class="page-item">
-                        <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        <a class="page-link" asp-action="Authors" asp-route-page="@i" asp-route-id="@ViewBag.Id">@i</a>
                     </li>
                 } else if (Math.Abs(i - ViewBag.Page) == 2)
                     {
@@ -61,7 +61,7 @@
                 }
             
             <li class="page-item @(ViewBag.Page == ViewBag.MaxPage ? "disabled" : "")">
-                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.Page + 1)">&raquo;</a>
+                <a class="page-link" asp-action="Authors" asp-route-page="@(ViewBag.Page + 1)" asp-route-id="@ViewBag.Id">&raquo;</a>
             </li>
         </ul>
     </nav>
