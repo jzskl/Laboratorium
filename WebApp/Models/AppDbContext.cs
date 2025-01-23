@@ -8,17 +8,18 @@ public class AppDbContext: IdentityDbContext<IdentityUser>
 {
     public DbSet<ContactEntity> Contacts { get; set; }
     public DbSet<OrganizationEntity> Organizations { get; set; }
-    private string DbPath { get; set; }
     public AppDbContext()
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = Path.Join(path, "contacts.db");
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite($"Data source={DbPath}");
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+        optionsBuilder.UseSqlite(configuration.GetConnectionString("Contacts"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
